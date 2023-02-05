@@ -51,16 +51,6 @@ const Banner = () => {
             {
                 bannerData.map(slide => <BannerItems key={slide.id} slide={slide}></BannerItems>)
             }
-
-            {/* <BannerItems image={image}></BannerItems>
-            
-            <div id="slide6" className="carousel-item relative w-full">
-                <img src={img6} className="w-full" alt='' />
-                <div className="absolute flex justify-end transform -translate-y-1/2 left-5 right-5 bottom-0">
-                    <a href="#slide5" className="btn btn-circle mr-5">❮</a>
-                    <a href="#slide1" className="btn btn-circle">❯</a>
-                </div>
-            </div> */}
         </div>
     );
 };
