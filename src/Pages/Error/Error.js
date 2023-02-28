@@ -4,7 +4,7 @@ import img from '../../assets/images/404/404.jpg';
 const Error = () => {
     return (
         <div>
-            <img src={img} alt="" />
+            <img className='mx-auto h-full' src={img} alt="" />
         </div>
     );
 };
