@@ -1,0 +1,12 @@
+.checkout-img:after {
+    content:'';
+    position: absolute;
+    left:80px;
+    top:120px;
+    right: 80px;
+    width:80%;
+    height:315px;
+    border-radius: 12px;
+    display:inline-block;
+    background: linear-gradient(to right, #151515 0%,rgba(21, 21, 21, 0) 100%); /* W3C */
+  }

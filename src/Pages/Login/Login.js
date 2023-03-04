@@ -15,6 +15,10 @@ const Login = () => {
         .then(result =>{
             const user = result.user;
             console.log(user);
+            if(user?.uid){
+                alert('Login successfully')
+                form.reset();
+            }
         })
         .catch(err => console.error(err));
     }
