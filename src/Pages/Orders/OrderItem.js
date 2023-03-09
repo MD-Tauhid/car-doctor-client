@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const OrderItem = ({ order }) => {
-    const { email, price, customer, phone, serviceName } = order;
+const OrderItem = ({ order, handleDelete }) => {
+    const { _id, email, price, customer, phone, serviceName, service } = order;
+    const [orderService, setOrderService] = useState({});
+
+    useEffect(()=>{
+        fetch(`http://localhost:5000/services/${service}`)
+        .then(res => res.json())
+        .then(data => setOrderService(data))
+    }, [service]);
+
     return (
         <tr>
             <th>
-                <button className='btn btn-outline btn-error' type="submit">x</button>
+                <button onClick={ ()=>handleDelete(_id) } className='btn btn-outline btn-error'>x</button>
             </th>
             <td>
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
-                        <div className="mask mask-squircle w-12 h-12">
-                            <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+                        <div className="rounded-lg w-28 h-24">
+                            {
+                                orderService?.img &&
+                                <img src={orderService.img} alt="Avatar Tailwind CSS Component" />
+                            }
                         </div>
                     </div>
                     <div>

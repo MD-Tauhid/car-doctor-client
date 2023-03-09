@@ -1,11 +1,12 @@
 import React from 'react';
 import {useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const Login = () => {
     const {loginUser} = useContext(AuthContext);
+    const navigate = useNavigate();
     const handleLogin = event =>{
         event.preventDefault();
         const form = event.target;
@@ -18,6 +19,7 @@ const Login = () => {
             if(user?.uid){
                 alert('Login successfully')
                 form.reset();
+                navigate('/');
             }
         })
         .catch(err => console.error(err));

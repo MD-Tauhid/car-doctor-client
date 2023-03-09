@@ -9,10 +9,28 @@ const Orders = () => {
     console.log(user);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/orders?email=${user.email}`)
+        fetch(`http://localhost:5000/orders?email=${user?.email}`)
             .then(res => res.json())
             .then(data => { setOrders(data) })
-    }, [user?.email])
+    }, [user?.email]);
+
+    const handleDelete = id =>{
+        const proceed = window.confirm('Are you sure you want to cancle the order?')
+        if(proceed){
+            fetch(`http://localhost:5000/orders/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if(data.deletedCount > 0){
+                    alert('Delete successfully');
+                    const newOrder = orders.filter(odr => odr._id !== id);
+                    setOrders(newOrder);
+                }
+            })
+        }
+    }
 
     return (
         <div className="overflow-x-auto w-full">
@@ -31,6 +49,7 @@ const Orders = () => {
                         orders.map(order => <OrderItem
                             key={order._id}
                             order={order}
+                            handleDelete = {handleDelete}
                         ></OrderItem>)
                     }
                 </tbody>
