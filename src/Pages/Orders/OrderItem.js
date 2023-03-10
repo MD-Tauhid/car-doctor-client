@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const OrderItem = ({ order, handleDelete }) => {
-    const { _id, email, price, customer, phone, serviceName, service } = order;
+const OrderItem = ({ order, handleDelete, handleStatusUpdate }) => {
+    const { _id, email, price, customer, serviceName, service, status } = order;
     const [orderService, setOrderService] = useState({});
 
     useEffect(()=>{
@@ -38,7 +38,7 @@ const OrderItem = ({ order, handleDelete }) => {
             </td>
             <td>Purple</td>
             <th>
-                <button className="btn btn-ghost btn-xs">{phone}</button>
+                <button onClick={()=> handleStatusUpdate(_id)} className="btn btn-ghost btn-xs">{status? status : 'pending'}</button>
             </th>
         </tr>
     );
