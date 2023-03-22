@@ -1,11 +1,16 @@
 import React from 'react';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { FaFacebook, FaGoogle } from 'react-icons/fa';
 
 const Login = () => {
     const { loginUser } = useContext(AuthContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = event => {
         event.preventDefault();
@@ -16,8 +21,8 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true })
                 if (user?.uid) {
-                    alert('Login successfully')
                     form.reset();
                 }
             })
@@ -52,6 +57,10 @@ const Login = () => {
                             <input className="btn btn-primary" type="submit" value="Login" />
                         </div>
                     </form>
+                    <div className='flex justify-center mb-5 gap-5'>
+                        <button className='text-3xl text-sky-700'><FaFacebook/></button>
+                        <button className='text-3xl text-green-600'><FaGoogle/></button>
+                    </div>
                     <div>
                         <p className='text-center'>New to car doctor? <Link className='text-orange-600 font-bold' to='/signup'>Sign up</Link> </p>
                     </div>
