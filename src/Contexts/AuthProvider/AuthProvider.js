@@ -22,18 +22,19 @@ const AuthProvider = ({children}) => {
     }
 
     const logOut = () =>{
-        setLoading(true);
         return signOut(auth);
     }
 
     useEffect( () =>{
         const unsubscribe = onAuthStateChanged(auth, currentUser =>{
+            console.log(currentUser);
             setUser(currentUser);
             setLoading(false);
         });
 
-        return unsubscribe();
-
+        return () =>{
+            unsubscribe();
+        }
     } , []);
 
     const authInfo ={
