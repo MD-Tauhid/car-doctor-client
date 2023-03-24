@@ -20,8 +20,24 @@ const Login = () => {
         loginUser(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
-                navigate(from, { replace: true })
+                const currentUser = {
+                    email: user.email
+                }
+
+                // get jwt token
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('CD-token', data.token)
+                        navigate(from, { replace: true })
+                    })
+
                 if (user?.uid) {
                     form.reset();
                 }
@@ -58,8 +74,8 @@ const Login = () => {
                         </div>
                     </form>
                     <div className='flex justify-center mb-5 gap-5'>
-                        <button className='text-3xl text-sky-700'><FaFacebook/></button>
-                        <button className='text-3xl text-green-600'><FaGoogle/></button>
+                        <button className='text-3xl text-sky-700'><FaFacebook /></button>
+                        <button className='text-3xl text-green-600'><FaGoogle /></button>
                     </div>
                     <div>
                         <p className='text-center'>New to car doctor? <Link className='text-orange-600 font-bold' to='/signup'>Sign up</Link> </p>

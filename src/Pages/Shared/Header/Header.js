@@ -5,7 +5,6 @@ import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 
 const Header = () => {
     const { user, logOut } = useContext(AuthContext);
-
     const handleLogOut = () => {
         logOut()
             .then()
@@ -14,8 +13,6 @@ const Header = () => {
 
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
-
-
         {
             user?.email?
                 <>
