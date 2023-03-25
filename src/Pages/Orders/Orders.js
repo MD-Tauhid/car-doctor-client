@@ -4,7 +4,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import OrderItem from './OrderItem';
 
 const Orders = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -13,15 +13,25 @@ const Orders = () => {
                 authorization: `Bearer ${localStorage.getItem('CD-token')}`
             }
         })
-            .then(res => res.json())
-            .then(data => { setOrders(data) })
-    }, [user?.email]);
+            .then(res => {
+                if(res.status === 403 || res.status === 401){
+                    return logOut();
+                }
+                return res.json();
+            })
+            .then(data => { 
+                setOrders(data);
+            })
+    }, [user?.email, logOut]);
 
     const handleDelete = id =>{
         const proceed = window.confirm('Are you sure you want to cancle the order?')
         if(proceed){
             fetch(`http://localhost:5000/orders/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers:{
+                    authorization: `Bearer ${localStorage.getItem('CD-token')}`
+                }
             })
             .then(res => res.json())
             .then(data => {
@@ -39,7 +49,8 @@ const Orders = () => {
         fetch(`http://localhost:5000/orders/${id}`, {
             method: 'PATCH',
             headers:{
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('CD-token')}`
             },
             body: JSON.stringify({
                 status: 'Approved'
@@ -65,9 +76,9 @@ const Orders = () => {
                     <tr>
                         <th>Delete</th>
                         <th>Name</th>
-                        <th>Job</th>
-                        <th>Favorite Color</th>
-                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Message</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>

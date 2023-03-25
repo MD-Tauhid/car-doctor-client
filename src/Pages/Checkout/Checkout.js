@@ -29,7 +29,8 @@ const Checkout = () => {
         fetch('http://localhost:5000/orders', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('CD-token')}`
             },
             body: JSON.stringify(order)
         })

@@ -22,6 +22,7 @@ const AuthProvider = ({children}) => {
     }
 
     const logOut = () =>{
+        localStorage.removeItem('CD-token')
         return signOut(auth);
     }
 
