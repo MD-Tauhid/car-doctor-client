@@ -26,7 +26,7 @@ const Checkout = () => {
             message
         }
 
-        fetch('http://localhost:5000/orders', {
+        fetch('https://car-doctor-server-kappa.vercel.app/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

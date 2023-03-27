@@ -5,7 +5,7 @@ const OrderItem = ({ order, handleDelete, handleStatusUpdate }) => {
     const [orderService, setOrderService] = useState({});
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/services/${service}`)
+        fetch(`https://car-doctor-server-kappa.vercel.app/services/${service}`)
         .then(res => res.json())
         .then(data => setOrderService(data))
     }, [service]);
