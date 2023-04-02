@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -52,6 +53,8 @@ const SignUp = () => {
                             <input className="btn btn-primary" type="submit" value="Sign Up" />
                         </div>
                     </form>
+                    <h2 className='text-center mb-4'>Social Login</h2>
+                    <SocialLogin></SocialLogin>
                     <div>
                         <p className='text-center'>Already have an account? <Link className='text-orange-600 font-bold' to='/login'>Login</Link> </p>
                     </div>

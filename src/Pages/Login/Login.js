@@ -1,9 +1,11 @@
 import React from 'react';
 import { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { setAuthToken } from '../../api/auth';
 import img from '../../assets/images/login/login.svg';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
-import { FaFacebook, FaGoogle } from 'react-icons/fa';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
+
 
 const Login = () => {
     const { loginUser } = useContext(AuthContext);
@@ -18,26 +20,11 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         loginUser(email, password)
-            .then(result => {
+            .then(async result => {
                 const user = result.user;
-                const currentUser = {
-                    email: user.email
-                }
-
-                // get jwt token
-                fetch('https://car-doctor-server-kappa.vercel.app/jwt', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(currentUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        localStorage.setItem('CD-token', data.token)
-                        navigate(from, { replace: true })
-                    })
-
+                await setAuthToken(user);
+                navigate(from, { replace: true });
+                
                 if (user?.uid) {
                     form.reset();
                 }
@@ -73,10 +60,8 @@ const Login = () => {
                             <input className="btn btn-primary" type="submit" value="Login" />
                         </div>
                     </form>
-                    <div className='flex justify-center mb-5 gap-5'>
-                        <button className='text-3xl text-sky-700'><FaFacebook /></button>
-                        <button className='text-3xl text-green-600'><FaGoogle /></button>
-                    </div>
+                    <h2 className='text-center mb-4'>Social Login</h2>
+                    <SocialLogin></SocialLogin>
                     <div>
                         <p className='text-center'>New to car doctor? <Link className='text-orange-600 font-bold' to='/signup'>Sign up</Link> </p>
                     </div>
